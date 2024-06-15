@@ -10,13 +10,20 @@ class Sensor implements ISensor {
   private _temperature!: number;
   private _isLost: boolean;
 
-  public constructor(name: string, position: Coords, wSpeed: Coords, tSpeed: Coords, temp: number) {
+  public constructor(
+    name: string,
+    position: Coords,
+    waterSpeed: Coords,
+    thrustersSpeed: Coords,
+    temperature: number,
+    isLost: boolean=false
+  ) {
     this.name = name;
     this._position = position;
-    this._waterSpeed = wSpeed;
-    this._thrustersSpeed = tSpeed;
-    this._temperature = temp;
-    this._isLost = false;
+    this._waterSpeed = waterSpeed;
+    this._thrustersSpeed = thrustersSpeed;
+    this._temperature = temperature;
+    this._isLost = isLost;
   }
 
   public update(): void {
