@@ -26,21 +26,32 @@ class Sensor implements ISensor {
     this._isLost = isLost;
   }
 
-  public update(): void {
-    if (this._isLost) {
-      return;
-    }
-
+  public calculateNewPosition(): void {
     this._position.x += this._waterSpeed.x + this._thrustersSpeed.x;
     this._position.y += this._waterSpeed.y + this._thrustersSpeed.y;
     this._position.z += this._waterSpeed.z + this._thrustersSpeed.z;
-    if (!this.isInSafeZone()) {
-      this._isLost = true;
-      return;
-    }
+  }
 
-    this.updateWaterSpeed();
-    this.updateTemperature();
+  public updateWaterSpeed(): void {
+    this._waterSpeed.x += Random.randomNumberFromInterval(
+      Number(process.env.WATER_SPEED_INC_MIN),
+      Number(process.env.WATER_SPEED_INC_MAX)
+    );
+    this._waterSpeed.y += Random.randomNumberFromInterval(
+      Number(process.env.WATER_SPEED_INC_MIN),
+      Number(process.env.WATER_SPEED_INC_MAX)
+    );
+    this._waterSpeed.z += Random.randomNumberFromInterval(
+      Number(process.env.WATER_SPEED_INC_MIN),
+      Number(process.env.WATER_SPEED_INC_MAX)
+    );
+  }
+
+  public updateTemperature(): void {
+    this._temperature = Random.randomNumberFromInterval(
+      Number(process.env.WATER_TEMPERATURE_INC_MIN),
+      Number(process.env.WATER_TEMPERATURE_INC_MAX)
+    );
   }
 
   public isInSafeZone(): boolean {
@@ -92,28 +103,6 @@ class Sensor implements ISensor {
 
   public get isLost(): boolean {
     return this._isLost;
-  }
-
-  private updateWaterSpeed(): void {
-    this._waterSpeed.x += Random.randomNumberFromInterval(
-      Number(process.env.WATER_SPEED_INC_MIN),
-      Number(process.env.WATER_SPEED_INC_MAX)
-    );
-    this._waterSpeed.y += Random.randomNumberFromInterval(
-      Number(process.env.WATER_SPEED_INC_MIN),
-      Number(process.env.WATER_SPEED_INC_MAX)
-    );
-    this._waterSpeed.z += Random.randomNumberFromInterval(
-      Number(process.env.WATER_SPEED_INC_MIN),
-      Number(process.env.WATER_SPEED_INC_MAX)
-    );
-  }
-
-  private updateTemperature(): void {
-    this._temperature = Random.randomNumberFromInterval(
-      Number(process.env.WATER_TEMPERATURE_INC_MIN),
-      Number(process.env.WATER_TEMPERATURE_INC_MAX)
-    );
   }
 }
 
