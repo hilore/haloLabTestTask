@@ -9,7 +9,7 @@ redisClient.on("error", (err) => {
   console.error("Redis Client Error:", err);
 });
 
-const port: number = process.env.PORT || 4000;
+const port: number = Number(process.env.PORT) || 4000;
 const app = express();
 
 app.use(express.json());
