@@ -38,7 +38,8 @@ class RedisClient {
       position: JSON.stringify(sensor.position),
       waterSpeed: JSON.stringify(sensor.waterSpeed),
       thrustersSpeed: JSON.stringify(sensor.thrustersSpeed),
-      temperature: JSON.stringify(sensor.temperature)
+      temperature: JSON.stringify(sensor.temperature),
+      lost: JSON.stringify(sensor.isLost)
     });
 
     return result;
