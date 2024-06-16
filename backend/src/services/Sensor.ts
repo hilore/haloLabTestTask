@@ -104,6 +104,10 @@ class Sensor implements ISensor {
   public get isLost(): boolean {
     return this._isLost;
   }
+
+  public set isLost(value: boolean) {
+    this._isLost = value;
+  }
 }
 
 export default Sensor;
