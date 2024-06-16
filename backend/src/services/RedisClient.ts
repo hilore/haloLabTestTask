@@ -9,12 +9,17 @@ class RedisClient {
     this.client = createClient();
   }
 
-  public static getInstance(): RedisClient {
+  public static async getInstance(): Promise<RedisClient> {
     if (!RedisClient.instance) {
       RedisClient.instance = new RedisClient();
+      await RedisClient.instance.connect();
     }
 
     return RedisClient.instance;
+  }
+
+  private async connect(): Promise<void> {
+    await this.client.connect();
   }
 
   public async getState(name: string): Promise<Sensor|null> {
