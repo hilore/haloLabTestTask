@@ -4,22 +4,19 @@ import RedisClient from "./RedisClient";
 import RandomCoords from "./RandomCoords";
 
 class SensorManager {
-  private sensors: Sensor[];
-  private tickInterval: number;
-  private tickTimeout: NodeJS.Timeout | number;
-  private redis: RedisClient;
+  private _sensors: Sensor[];
+  private redis!: RedisClient;
   public readonly names: string[];
 
   public constructor() {
-    this.sensors = [];
-    this.tickInterval = parseInt(process.env.TICK_INTERVAL || "1000");
-    this.redis = RedisClient.getInstance();
+    this._sensors = [];
     this.names = ["alpha", "beta", "gamma", "delta"];
-    this.tickTimeout = 0;
   }
 
   public async initSensors(): Promise<void> {
-    if (this.sensors.length === 0) {
+    this.redis = await RedisClient.getInstance();
+
+    if (this._sensors.length === 0) {
       for (const name of this.names) {
         let sensor: Sensor;
         const cachedSensor = await this.redis.getState(name);
@@ -48,32 +45,58 @@ class SensorManager {
           sensor = new Sensor(name, position, waterSpeed, thrustersSpeed, temperature);
           await this.redis.saveState(sensor);
         }
-        this.sensors.push(sensor);
+        this._sensors.push(sensor);
       }
     }
   }
 
-  public startUpdatingSensors(): void {
-    this.tickTimeout = setInterval(async () => {
-      await this.updateSensors();
-    }, this.tickInterval);
-  }
-
-  public stopUpdateSensors(): void {
-    clearInterval(this.tickTimeout);
-  }
-
   public async updateSensors(): Promise<void> {
-    for (const s of this.sensors) {
+    for (const s of this._sensors) {
       if (!s.isLost) {
         s.calculateNewPosition();
         if (s.isInSafeZone()) {
           s.updateWaterSpeed();
           s.updateTemperature();
           await this.redis.saveState(s);
+        } else {
+          s.isLost = true;
+          await this.redis.saveState(s);
         }
       }
     }
+  }
+
+  public async adjustThrustersSpeed(
+    name: string,
+    x?: number,
+    y?: number,
+    z?: number
+  ): Promise<void> {
+    const sensor = this._sensors.find((s) => s.name === name);
+
+    if (!sensor) {
+      throw new Error(`Sensor ${name} not found`);
+    }
+
+    sensor.adjustThrustersSpeed(x, y, z);
+    await this.redis.saveState(sensor);
+  }
+
+  public get sensors(): object[] {
+    const data: object[] = [];
+
+    this._sensors.forEach((s) => {
+      data.push({
+        name: s.name,
+        position: s.position,
+        waterSpeed: s.waterSpeed,
+        thrustersSpeed: s.thrustersSpeed,
+        temperature: s.temperature,
+        lost: s.isLost,
+      });
+    });
+
+    return data;
   }
 }
 
