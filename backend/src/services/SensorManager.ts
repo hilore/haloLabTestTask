@@ -72,14 +72,25 @@ class SensorManager {
     y?: number,
     z?: number
   ): Promise<void> {
-    const sensor = this._sensors.find((s) => s.name === name);
+    let sensor: Sensor;
 
-    if (!sensor) {
-      throw new Error(`Sensor ${name} not found`);
+    try {
+      sensor = this.findSensor(name);
+    } catch (err) {
+      throw err;
     }
 
     sensor.adjustThrustersSpeed(x, y, z);
     await this.redis.saveState(sensor);
+  }
+
+  public findSensor(name: string): Sensor {
+    const sensor = this._sensors.find((s) => s.name === name);
+    if (!sensor) {
+      throw new Error(`Sensor ${name} not found`);
+    }
+
+    return sensor;
   }
 
   public get sensors(): object[] {
