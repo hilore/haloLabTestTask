@@ -1,4 +1,5 @@
 import Sensor from "./Sensor";
+import SensorDto from "./types/SensorDto";
 import Random from "./Random";
 import RedisClient from "./RedisClient";
 import RandomCoords from "./RandomCoords";
@@ -87,14 +88,15 @@ class SensorManager {
   public findSensor(name: string): Sensor {
     const sensor = this._sensors.find((s) => s.name === name);
     if (!sensor) {
-      throw new Error(`Sensor ${name} not found`);
+      // TODO: create custom Exception classes
+      throw new Error(`404:Sensor ${name} not found`);
     }
 
     return sensor;
   }
 
-  public get sensors(): object[] {
-    const data: object[] = [];
+  public get sensors(): SensorDto[] {
+    const data: SensorDto[] = [];
 
     this._sensors.forEach((s) => {
       data.push({
