@@ -6,7 +6,12 @@ class RedisClient {
   private client: RedisClientType;
 
   private constructor() {
-    this.client = createClient();
+    const host = process.env.REDIS_HOST || "localhost";
+    const port = Number(process.env.REDIS_PORT) || 6379;
+
+    this.client = createClient({
+      url: `redis://${host}:${port}`
+    });
   }
 
   public static async getInstance(): Promise<RedisClient> {
@@ -19,6 +24,9 @@ class RedisClient {
   }
 
   private async connect(): Promise<void> {
+    this.client.on("error", (err) => {
+      console.error("Failed to connect to Redis:", err.message);
+    });
     await this.client.connect();
   }
 
