@@ -1,23 +1,23 @@
 import Sensor from "./Sensor";
+import SensorDto from "./types/SensorDto";
 import Random from "./Random";
 import RedisClient from "./RedisClient";
 import RandomCoords from "./RandomCoords";
+import SENSOR_NAMES from "./Variables";
 
 class SensorManager {
   private _sensors: Sensor[];
   private redis!: RedisClient;
-  public readonly names: string[];
 
   public constructor() {
     this._sensors = [];
-    this.names = ["alpha", "beta", "gamma", "delta"];
   }
 
   public async initSensors(): Promise<void> {
     this.redis = await RedisClient.getInstance();
 
     if (this._sensors.length === 0) {
-      for (const name of this.names) {
+      for (const name of SENSOR_NAMES) {
         let sensor: Sensor;
         const cachedSensor = await this.redis.getState(name);
 
@@ -72,18 +72,30 @@ class SensorManager {
     y?: number,
     z?: number
   ): Promise<void> {
-    const sensor = this._sensors.find((s) => s.name === name);
+    let sensor: Sensor;
 
-    if (!sensor) {
-      throw new Error(`Sensor ${name} not found`);
+    try {
+      sensor = this.findSensor(name);
+    } catch (err) {
+      throw err;
     }
 
     sensor.adjustThrustersSpeed(x, y, z);
     await this.redis.saveState(sensor);
   }
 
-  public get sensors(): object[] {
-    const data: object[] = [];
+  public findSensor(name: string): Sensor {
+    const sensor = this._sensors.find((s) => s.name === name);
+    if (!sensor) {
+      // TODO: create custom Exception classes
+      throw new Error(`404:Sensor ${name} not found`);
+    }
+
+    return sensor;
+  }
+
+  public get sensors(): SensorDto[] {
+    const data: SensorDto[] = [];
 
     this._sensors.forEach((s) => {
       data.push({
