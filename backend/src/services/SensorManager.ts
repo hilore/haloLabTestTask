@@ -3,22 +3,21 @@ import SensorDto from "./types/SensorDto";
 import Random from "./Random";
 import RedisClient from "./RedisClient";
 import RandomCoords from "./RandomCoords";
+import SENSOR_NAMES from "./Variables";
 
 class SensorManager {
   private _sensors: Sensor[];
   private redis!: RedisClient;
-  public readonly names: string[];
 
   public constructor() {
     this._sensors = [];
-    this.names = ["alpha", "beta", "gamma", "delta"];
   }
 
   public async initSensors(): Promise<void> {
     this.redis = await RedisClient.getInstance();
 
     if (this._sensors.length === 0) {
-      for (const name of this.names) {
+      for (const name of SENSOR_NAMES) {
         let sensor: Sensor;
         const cachedSensor = await this.redis.getState(name);
 
