@@ -48,7 +48,7 @@ class Sensor implements ISensor {
   }
 
   public updateTemperature(): void {
-    this._temperature = Random.randomNumberFromInterval(
+    this._temperature += Random.randomNumberFromInterval(
       Number(process.env.WATER_TEMPERATURE_INC_MIN),
       Number(process.env.WATER_TEMPERATURE_INC_MAX)
     );
