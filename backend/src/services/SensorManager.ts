@@ -103,6 +103,7 @@ class SensorManager {
         position: s.position,
         waterSpeed: s.waterSpeed,
         thrustersSpeed: s.thrustersSpeed,
+        currentSpeed: s.calucateCurrentSpeed(),
         temperature: s.temperature,
         lost: s.isLost,
       });
