@@ -33,25 +33,56 @@ class Sensor implements ISensor {
   }
 
   public updateWaterSpeed(): void {
+    const waterSpeedMin = Number(process.env.WATER_SPEED_MIN);
+    const waterSpeedMax = Number(process.env.WATER_SPEED_MAX);
+    const waterSpeedIncMin = Number(process.env.WATER_SPEED_INC_MIN);
+    const waterSpeedIncMax = Number(process.env.WATER_SPEED_INC_MAX);
+
     this._waterSpeed.x += Random.randomNumberFromInterval(
-      Number(process.env.WATER_SPEED_INC_MIN),
-      Number(process.env.WATER_SPEED_INC_MAX)
+      waterSpeedIncMin, waterSpeedIncMax
     );
+    
+    if (this._waterSpeed.x < waterSpeedMin) {
+      this._waterSpeed.x = waterSpeedMin;
+    } else if (this._waterSpeed.x > waterSpeedMax) {
+      this._waterSpeed.x = waterSpeedMax;
+    }
+
     this._waterSpeed.y += Random.randomNumberFromInterval(
-      Number(process.env.WATER_SPEED_INC_MIN),
-      Number(process.env.WATER_SPEED_INC_MAX)
+      waterSpeedIncMin, waterSpeedIncMax
     );
+
+    if (this._waterSpeed.y < waterSpeedMin) {
+      this._waterSpeed.y = waterSpeedMin;
+    } else if (this._waterSpeed.y > waterSpeedMax) {
+      this._waterSpeed.y = waterSpeedMax;
+    }
+
     this._waterSpeed.z += Random.randomNumberFromInterval(
-      Number(process.env.WATER_SPEED_INC_MIN),
-      Number(process.env.WATER_SPEED_INC_MAX)
+      waterSpeedIncMin, waterSpeedIncMax
     );
+
+    if (this._waterSpeed.z < waterSpeedMin) {
+      this._waterSpeed.z = waterSpeedMin;
+    } else if (this._waterSpeed.z > waterSpeedMax) {
+      this._waterSpeed.z = waterSpeedMax;
+    }
   }
 
   public updateTemperature(): void {
+    const waterTempMin = Number(process.env.WATER_TEMPERATURE_MIN);
+    const waterTempMax = Number(process.env.WATER_TEMPERATURE_MAX);
+
     this._temperature += Random.randomNumberFromInterval(
       Number(process.env.WATER_TEMPERATURE_INC_MIN),
       Number(process.env.WATER_TEMPERATURE_INC_MAX)
     );
+
+    if (this._temperature < waterTempMin) {
+      this._temperature = waterTempMin;
+    } else if (this._temperature > waterTempMax) {
+      this._temperature = waterTempMax;
+    }
   }
 
   public isInSafeZone(): boolean {
