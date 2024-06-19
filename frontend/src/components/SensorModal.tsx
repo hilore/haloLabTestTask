@@ -15,8 +15,6 @@ const SensorModal: React.FC<SensorModalProps> = ({active, setActive, sensor, tim
   const [ty, setTy] = useState(-Math.ceil(sensor.waterSpeed.y));
   const [tz, setTz] = useState(-Math.ceil(sensor.waterSpeed.z));
 
-  console.log(sensor);
-
   return (
     <div className="cardModal">
       <div className="cardModalContent" style={{border: `4px solid ${timeColor}`}}>
