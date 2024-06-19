@@ -69,14 +69,14 @@ const initSensors = async () => {
 };
 
 const updateAndBroadcastSensorsData = async () => {
-  await sensorManager.updateSensors();
-
   const sensorsData = JSON.stringify(sensorManager.sensors);
   wss.clients.forEach((client: WebSocket.WebSocket) => {
     if (client.readyState === WebSocket.OPEN) {
       client.send(sensorsData);
     }
   });
+
+  await sensorManager.updateSensors();
 };
 
 initSensors();
