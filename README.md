@@ -1,6 +1,6 @@
 # Information
 HaloLab <a href="https://halolab.notion.site/Full-stack-developer-test-task-Jun-2024-4aef7553eb434e75ae6a117b4538d4a8" target="_blank">Full-Stack Developer Test Task</a>.
-Feel free to change both ```.env``` files in the ```backend``` and ```frontend``` directories.
+Feel free to change both ```.env``` files in the ```backend``` and ```frontend``` directories (**the values of variables that are in these ```.env``` files should be the same for both the backend and frontend**).
 
 # Running
 ## Backend
