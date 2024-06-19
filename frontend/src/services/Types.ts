@@ -1,4 +1,8 @@
-import Coords from "./Coords";
+type Coords = {
+  x: number;
+  y: number;
+  z: number;
+};
 
 type SensorDto = {
   readonly name: string;
@@ -10,4 +14,7 @@ type SensorDto = {
   readonly lost: boolean;
 };
 
-export default SensorDto;
+export type {
+  Coords,
+  SensorDto
+};

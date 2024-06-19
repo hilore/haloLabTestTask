@@ -1,0 +1,177 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 44px;
+}
+
+.card {
+  width: 400px;
+  background-color: #fcfcfc;
+  padding: 24px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.card h2 {
+  margin-bottom: 14px;
+  font-size: 30px;
+}
+
+.card p {
+  font-size: 24px;
+}
+
+.card span {
+  font-weight: bold;
+}
+
+.card:hover {
+  cursor: pointer;
+  background-color: #bababa;
+}
+
+.cardModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.cardModalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  height: 500px;
+  width: 1300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardModalContent h1 {
+  margin-bottom: 24px;
+  text-align: center;
+  font-size: 34px;
+}
+
+.cardModalContent p {
+  font-size: 28px;
+  margin-bottom: 24px;
+}
+
+.cardModalContent span {
+  font-weight: bold;
+}
+
+.closeBtn {
+  margin-top: auto;
+  bottom: 0px;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.thruster {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.thruster label {
+  font-size: 28px;
+}
+
+.thruster input {
+  margin-right: 12px;
+  margin-left: 12px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 120px;
+}
+
+.thruster span {
+  font-size: 28px;
+  font-weight: normal;
+  margin-left: 24px;
+}
+
+.thruster button {
+  margin: 0 4px;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.thruster button:hover {
+  background-color: #e0e0e0;
+}
+
+.card .progressBar {
+  width: 24px;
+  height: calc(100% - 24px);
+  background-color: #e0e0e0;
+  border-radius: 14px;
+  overflow: hidden;
+  position: absolute;
+  right: 14px;
+  top: 12px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.card .progress {
+  height: 100%;
+  background-color: #4caf50;
+  transition: height 0.3s ease;
+}
+
+.temperature-mark {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  padding: 10px 0;
+  color: black;
+  font-weight: bold;
+}
+
+.temperature-mark.min {
+  bottom: 0;
+}
+
+.temperature-mark.max {
+  top: 0;
+}
