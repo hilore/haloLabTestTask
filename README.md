@@ -1,5 +1,6 @@
 # Information
-HaloLab Full-Stack Developer Test Task
+HaloLab Full-Stack Developer Test Task.
+Feel free to change both ```.env``` files in the ```backend``` and ```frontend``` directories.
 
 # Running
 ## Backend
