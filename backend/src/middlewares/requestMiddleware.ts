@@ -1,8 +1,8 @@
 import {Request, Response, NextFunction} from "express";
 
 function checkRequestMiddleware(req: Request, res: Response, next: NextFunction) {
-  const incrementMin = Number(process.env.INCREMENT_MIN);
-  const incrementMax = Number(process.env.INCREMENT_MAX);
+  const incrementMin = Number(process.env.THRUSTER_INCREMENT_MIN);
+  const incrementMax = Number(process.env.THRUSTER_INCREMENT_MAX);
   const nonNumberCoordRes = {
     status: false,
     message: "Coordinate must be a number"

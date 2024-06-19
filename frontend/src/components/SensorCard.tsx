@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import {SensorDto} from "../services/Types";
 import Sensor from "../services/Sensor";
+import SensorModal from "./SensorModal";
 import Thermometer from "./Thermometer";
 
 type SensorProps = {
@@ -13,6 +14,8 @@ const SensorCard: React.FC<SensorProps> = ({sensor, temperatureMin, temperatureM
   const interval = 2;
   const SAFE_AREA_SIZE = 1400;
   let waterTemperature: number = Number(sensor.temperature.toFixed(2));
+
+  const [isModalActive, setModalActive] = useState<boolean>(false);
 
   let timeUntilUnsafeColor = "";
   let timeUntilUnsafe = Sensor.calculateTimeUntilLeaves(sensor, SAFE_AREA_SIZE, interval);
@@ -39,22 +42,28 @@ const SensorCard: React.FC<SensorProps> = ({sensor, temperatureMin, temperatureM
   };
 
   return (
-    <div
+    <div>
+      <div
       className="card"
       style={cardStyle}
+      onClick={() => setModalActive(true)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-    >
+      >
       <h2>{sensor.name}</h2>
       <p>Water temperature: {waterTemperature}</p>
-      <Thermometer
-        temperature={waterTemperature}
-        temperatureMin={temperatureMin}
-        temperatureMax={temperatureMax}
-      />
       <p>
-        Time until safe: <span style={{color: `${timeUntilUnsafeColor}`}}>{timeUntilUnsafe}</span>
+        Time until leave safe area: <span style={{color: `${timeUntilUnsafeColor}`}}>{timeUntilUnsafe}</span>
       </p>
+      </div>
+      {isModalActive &&
+      <SensorModal
+        active={isModalActive}
+        setActive={setModalActive}
+        sensor={sensor}
+        timeUntilUnsafe={timeUntilUnsafe}
+        timeColor={timeUntilUnsafeColor}
+      />}
     </div>
   );
 };
