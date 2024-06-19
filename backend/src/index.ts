@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import express, {Request, Response} from "express";
+import express, {Request, Response, NextFunction} from "express";
 import WebSocket from "ws";
 import SensorManager from "./services/SensorManager";
 import requestMwd from "./middlewares/requestMiddleware";
@@ -17,6 +17,19 @@ const wss = new WebSocket.Server({server});
 const sensorManager = new SensorManager();
 
 app.use(express.json());
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
+  res.header("Access-Control-Allow-Methods", "GET, POST");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Token");
+  next();
+});
+app.options("*", (req: Request, res: Response) => {
+  res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
+  res.header("Access-Control-Allow-Methods", "GET, POST");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Token");
+  res.sendStatus(200);
+});
+
 // TODO: move this logic somewhere else
 app.post(
   "/sensor/:name/thruster",
