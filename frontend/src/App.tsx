@@ -8,6 +8,9 @@ function App() {
   const backendWsUrl: string = `ws://localhost:${BACKEND_PORT}`;
   let [sensors, setSensors] = useState<SensorDto[]>([]);
 
+  const tempMin = -4;
+  const tempMax = 44;
+
   useEffect(() => {
     const socket = new WebSocket(backendWsUrl);
 
@@ -34,6 +37,8 @@ function App() {
         {sensors.map((sensor: SensorDto, index: number) => (
           <SensorCard
           sensor={sensor}
+          temperatureMin={tempMin}
+          temperatureMax={tempMax}
           key={index}
           />
         ))}
