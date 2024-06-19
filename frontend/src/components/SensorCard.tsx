@@ -1,12 +1,15 @@
 import React from "react";
 import {SensorDto} from "../services/Types";
 import Sensor from "../services/Sensor";
+import Thermometer from "./Thermometer";
 
 type SensorProps = {
   sensor: SensorDto;
+  temperatureMin: number;
+  temperatureMax: number;
 };
 
-const SensorCard: React.FC<SensorProps> = ({sensor}) => {
+const SensorCard: React.FC<SensorProps> = ({sensor, temperatureMin, temperatureMax}) => {
   const interval = 2;
   const SAFE_AREA_SIZE = 1400;
   let waterTemperature: number = Number(sensor.temperature.toFixed(2));
@@ -44,6 +47,11 @@ const SensorCard: React.FC<SensorProps> = ({sensor}) => {
     >
       <h2>{sensor.name}</h2>
       <p>Water temperature: {waterTemperature}</p>
+      <Thermometer
+        temperature={waterTemperature}
+        temperatureMin={temperatureMin}
+        temperatureMax={temperatureMax}
+      />
       <p>
         Time until safe: <span style={{color: `${timeUntilUnsafeColor}`}}>{timeUntilUnsafe}</span>
       </p>
