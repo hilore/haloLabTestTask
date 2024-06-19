@@ -4,12 +4,12 @@ import SensorCard from "./components/SensorCard";
 import "./styles/App.css";
 
 function App() {
-  const BACKEND_PORT = 4000;
-  const backendWsUrl: string = `ws://localhost:${BACKEND_PORT}`;
+  const backendPort = Number(process.env.REACT_APP_BACKEND_PORT);
+  const backendWsUrl: string = `ws://localhost:${backendPort}`;
   let [sensors, setSensors] = useState<SensorDto[]>([]);
 
-  const tempMin = -4;
-  const tempMax = 44;
+  const waterTemperatureMin = Number(process.env.REACT_APP_WATER_TEMPERATURE_MIN);
+  const waterTemperatureMax = Number(process.env.REACT_APP_WATER_TEMPERATURE_MAX);
 
   useEffect(() => {
     const socket = new WebSocket(backendWsUrl);
@@ -37,8 +37,8 @@ function App() {
         {sensors.map((sensor: SensorDto, index: number) => (
           <SensorCard
           sensor={sensor}
-          temperatureMin={tempMin}
-          temperatureMax={tempMax}
+          temperatureMin={waterTemperatureMin}
+          temperatureMax={waterTemperatureMax}
           key={index}
           />
         ))}

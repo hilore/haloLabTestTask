@@ -10,6 +10,7 @@ type ThrusterProps = {
 
 const Thruster: React.FC<ThrusterProps> = ({sensorName, coord, coordName, setCoord, waterSpeed}) => {
   let [errMsg, setErrMsg] = useState("");
+  const backendPort = Number(process.env.REACT_APP_BACKEND_PORT);
 
   const increment = () => {
     setCoord(coord += 1);
@@ -21,7 +22,7 @@ const Thruster: React.FC<ThrusterProps> = ({sensorName, coord, coordName, setCoo
   };
 
   const adjustThrusterSpeed = async () => {
-    const res = await fetch(`http://localhost:4000/sensor/${sensorName}/thruster`, {
+    const res = await fetch(`http://localhost:${backendPort}/sensor/${sensorName}/thruster`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

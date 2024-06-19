@@ -11,14 +11,14 @@ type SensorProps = {
 };
 
 const SensorCard: React.FC<SensorProps> = ({sensor, temperatureMin, temperatureMax}) => {
-  const interval = 2;
-  const SAFE_AREA_SIZE = 1400;
+  const tickInterval = Number(process.env.REACT_APP_TICK_INTERVAL);
+  const safeAreaSize = Number(process.env.REACT_APP_SAFE_AREA_SIZE);
   let waterTemperature: number = Number(sensor.temperature.toFixed(2));
 
   const [isModalActive, setModalActive] = useState<boolean>(false);
 
   let timeUntilUnsafeColor = "";
-  let timeUntilUnsafe = Sensor.calculateTimeUntilLeaves(sensor, SAFE_AREA_SIZE, interval);
+  let timeUntilUnsafe = Sensor.calculateTimeUntilLeaves(sensor, safeAreaSize, tickInterval / 1000);
 
   const handleMouseEnter = (event: any) => {
     event.currentTarget.style.backgroundColor = "#bababa";
@@ -55,6 +55,7 @@ const SensorCard: React.FC<SensorProps> = ({sensor, temperatureMin, temperatureM
       <p>
         Time until leave safe area: <span style={{color: `${timeUntilUnsafeColor}`}}>{timeUntilUnsafe}</span>
       </p>
+      <Thermometer temperature={waterTemperature} temperatureMin={temperatureMin} temperatureMax={temperatureMax}/>
       </div>
       {isModalActive &&
       <SensorModal
