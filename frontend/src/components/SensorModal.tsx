@@ -11,9 +11,11 @@ type SensorModalProps = {
 };
 
 const SensorModal: React.FC<SensorModalProps> = ({active, setActive, sensor, timeUntilUnsafe, timeColor}) => {
-  const [tx, setTx] = useState(0);
-  const [ty, setTy] = useState(0);
-  const [tz, setTz] = useState(0);
+  const [tx, setTx] = useState(-Math.ceil(sensor.waterSpeed.x));
+  const [ty, setTy] = useState(-Math.ceil(sensor.waterSpeed.y));
+  const [tz, setTz] = useState(-Math.ceil(sensor.waterSpeed.z));
+
+  console.log(sensor);
 
   return (
     <div className="cardModal">
@@ -23,9 +25,27 @@ const SensorModal: React.FC<SensorModalProps> = ({active, setActive, sensor, tim
           ? <p>sensor lost</p>
           : <div>
               <p>Time until leave safe area: <span style={{color: `${timeColor}`}}>{timeUntilUnsafe}</span></p>
-              <Thruster sensorName={sensor.name} coord={tx} coordName={"x"} setCoord={setTx} waterSpeed={Math.ceil(sensor.waterSpeed.x)}/>
-              <Thruster sensorName={sensor.name} coord={ty} coordName={"y"} setCoord={setTy} waterSpeed={Math.ceil(sensor.waterSpeed.y)}/>
-              <Thruster sensorName={sensor.name} coord={tz} coordName={"z"} setCoord={setTz} waterSpeed={Math.ceil(sensor.waterSpeed.z)}/>
+              <Thruster
+                sensorName={sensor.name}
+                coord={tx}
+                coordName={"x"}
+                setCoord={setTx}
+                waterSpeed={Math.ceil(sensor.waterSpeed.x)}
+              />
+              <Thruster
+                sensorName={sensor.name}
+                coord={ty}
+                coordName={"y"}
+                setCoord={setTy}
+                waterSpeed={Math.ceil(sensor.waterSpeed.y)}
+              />
+              <Thruster
+                sensorName={sensor.name}
+                coord={tz}
+                coordName={"z"}
+                setCoord={setTz}
+                waterSpeed={Math.ceil(sensor.waterSpeed.z)}
+              />
             </div>
         }
         <button className="closeBtn" onClick={() => setActive(false)}>Close</button>
