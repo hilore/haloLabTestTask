@@ -21,8 +21,8 @@ const Thermometer: React.FC<ThermometerProps> = ({temperature, temperatureMin, t
   return (
     <div className="progressBar">
       <div className="progress" style={{height: `${progress}%`, backgroundColor: pgColor}}></div>
-      <div className="temperature-mark min" style={{ bottom: '0%' }}>{temperatureMin}°</div>
-      <div className="temperature-mark max" style={{ top: '0%' }}>{temperatureMax}°</div>
+    {/*<div className="temperature-mark min" style={{ bottom: '0%' }}>{temperatureMin}°</div>*/}
+     {/*<div className="temperature-mark max" style={{ top: '0%' }}>{temperatureMax}°</div>*/}
     </div>
   );
 };
