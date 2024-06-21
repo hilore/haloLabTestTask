@@ -11,7 +11,6 @@ type SensorModalProps = {
 };
 
 const SensorModal: React.FC<SensorModalProps> = ({active, setActive, sensor, timeUntilUnsafe, timeColor}) => {
-  console.log(sensor.thrustersSpeed);
   const [tx, setTx] = useState(0);
   const [ty, setTy] = useState(0);
   const [tz, setTz] = useState(0);
