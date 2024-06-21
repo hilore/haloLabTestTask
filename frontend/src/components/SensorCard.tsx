@@ -50,12 +50,17 @@ const SensorCard: React.FC<SensorProps> = ({sensor, temperatureMin, temperatureM
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       >
-      <h2>{sensor.name}</h2>
-      <p>Water temperature: {waterTemperature}</p>
-      <p>
-        Time until leave safe area: <span style={{color: `${timeUntilUnsafeColor}`}}>{timeUntilUnsafe}</span>
-      </p>
-      <Thermometer temperature={waterTemperature} temperatureMin={temperatureMin} temperatureMax={temperatureMax}/>
+        <h2>{sensor.name}</h2>
+        {!sensor.lost
+          ? <div>
+              <p>Water temperature: {waterTemperature}</p>
+              <p>
+                Time until leave safe area: <span style={{color: `${timeUntilUnsafeColor}`}}>{timeUntilUnsafe}</span>
+              </p>
+              <Thermometer temperature={waterTemperature} temperatureMin={temperatureMin} temperatureMax={temperatureMax}/>
+            </div>
+          : <p>lost</p>
+        }
       </div>
       {isModalActive &&
       <SensorModal
