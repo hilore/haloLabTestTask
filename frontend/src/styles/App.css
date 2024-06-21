@@ -7,18 +7,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-
+  min-height: 100vh;
+  overflow: auto;
 }
 
 .gridContainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 44px;
+  padding: 24px;
 }
 
 .card {
   width: 400px;
+  height: 100px;
   background-color: #fcfcfc;
   padding: 24px;
   border-radius: 4px;
@@ -57,6 +59,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: auto;
   z-index: 1000;
 }
 
