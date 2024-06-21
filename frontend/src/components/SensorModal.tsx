@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {SensorDto} from "../services/Types";
 import Thruster from "./UI/Thruster";
 
@@ -11,9 +11,30 @@ type SensorModalProps = {
 };
 
 const SensorModal: React.FC<SensorModalProps> = ({active, setActive, sensor, timeUntilUnsafe, timeColor}) => {
-  const [tx, setTx] = useState(-Math.ceil(sensor.waterSpeed.x));
-  const [ty, setTy] = useState(-Math.ceil(sensor.waterSpeed.y));
-  const [tz, setTz] = useState(-Math.ceil(sensor.waterSpeed.z));
+  console.log(sensor.thrustersSpeed);
+  const [tx, setTx] = useState(0);
+  const [ty, setTy] = useState(0);
+  const [tz, setTz] = useState(0);
+
+  useEffect(() => {
+    if (sensor.thrustersSpeed.x > 0) {
+      setTx(Math.ceil(sensor.thrustersSpeed.x));
+    } else {
+      setTx(Math.floor(sensor.thrustersSpeed.x));
+    }
+
+    if (sensor.thrustersSpeed.y > 0) {
+      setTy(Math.ceil(sensor.thrustersSpeed.y));
+    } else {
+      setTy(Math.floor(sensor.thrustersSpeed.y));
+    }
+
+    if (sensor.thrustersSpeed.z > 0) {
+      setTz(Math.ceil(sensor.thrustersSpeed.z));
+    } else {
+      setTz(Math.floor(sensor.thrustersSpeed.z));
+    }
+  }, [sensor.thrustersSpeed.x, sensor.thrustersSpeed.y, sensor.thrustersSpeed.z]);
 
   return (
     <div className="cardModal">
