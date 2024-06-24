@@ -42,31 +42,31 @@ class Sensor implements ISensor {
       waterSpeedIncMin, waterSpeedIncMax
     );
     
-    //if (this._waterSpeed.x < waterSpeedMin) {
-    //  this._waterSpeed.x = waterSpeedMin;
-    //} else if (this._waterSpeed.x > waterSpeedMax) {
-    //  this._waterSpeed.x = waterSpeedMax;
-    //}
+    if (this._waterSpeed.x < waterSpeedMin) {
+      this._waterSpeed.x = waterSpeedMin;
+    } else if (this._waterSpeed.x > waterSpeedMax) {
+      this._waterSpeed.x = waterSpeedMax;
+    }
 
     this._waterSpeed.y += Random.randomNumberFromInterval(
       waterSpeedIncMin, waterSpeedIncMax
     );
 
-    //if (this._waterSpeed.y < waterSpeedMin) {
-    //  this._waterSpeed.y = waterSpeedMin;
-    //} else if (this._waterSpeed.y > waterSpeedMax) {
-    //  this._waterSpeed.y = waterSpeedMax;
-    //}
+    if (this._waterSpeed.y < waterSpeedMin) {
+      this._waterSpeed.y = waterSpeedMin;
+    } else if (this._waterSpeed.y > waterSpeedMax) {
+      this._waterSpeed.y = waterSpeedMax;
+    }
 
     this._waterSpeed.z += Random.randomNumberFromInterval(
       waterSpeedIncMin, waterSpeedIncMax
     );
 
-    //if (this._waterSpeed.z < waterSpeedMin) {
-    //  this._waterSpeed.z = waterSpeedMin;
-    //} else if (this._waterSpeed.z > waterSpeedMax) {
-    //  this._waterSpeed.z = waterSpeedMax;
-    //}
+    if (this._waterSpeed.z < waterSpeedMin) {
+      this._waterSpeed.z = waterSpeedMin;
+    } else if (this._waterSpeed.z > waterSpeedMax) {
+      this._waterSpeed.z = waterSpeedMax;
+    }
   }
 
   public updateTemperature(): void {
@@ -78,11 +78,11 @@ class Sensor implements ISensor {
       Number(process.env.WATER_TEMPERATURE_INC_MAX)
     );
 
-    //if (this._temperature < waterTempMin) {
-    //  this._temperature = waterTempMin;
-    //} else if (this._temperature > waterTempMax) {
-    //  this._temperature = waterTempMax;
-    //}
+    if (this._temperature < waterTempMin) {
+      this._temperature = waterTempMin;
+    } else if (this._temperature > waterTempMax) {
+      this._temperature = waterTempMax;
+    }
   }
 
   public isInSafeZone(): boolean {
